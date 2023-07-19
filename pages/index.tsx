@@ -1,4 +1,5 @@
 import Head from "next/head"
+import PhotoGallery from "components/Image/PhotoGAllery";
 
 export default function Web() {
   return (
@@ -34,6 +35,7 @@ export default function Web() {
             </p>
           </div>
         </div>
+        <PhotoGallery />
       </section>
     </>
   )
