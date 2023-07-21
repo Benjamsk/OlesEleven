@@ -3,7 +3,7 @@
 import PhotoAlbum from "react-photo-album";
 
 import NextJsImage from "components/Image/NextJsImage";
-import photos from "components/Image/Photos";
+import photos from "components/Image/photos";
 
 export default function PhotoGallery() {
     return (
