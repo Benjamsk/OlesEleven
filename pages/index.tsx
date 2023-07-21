@@ -1,5 +1,5 @@
 import Head from "next/head"
-import PhotoGallery from "components/Image/PhotoGAllery";
+import PhotoGallery from "components/Image/PhotoGallery"
 
 export default function Web() {
   return (
