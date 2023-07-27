@@ -16,6 +16,11 @@ const Navbar = () => {
               Home
             </Link>
           </li>
+          <li>
+            <Link href="/challenge" className="text-gray-600 hover:text-gray-800">
+              Challenge
+            </Link>
+          </li>
         </ul>
       </div>
     </div>
