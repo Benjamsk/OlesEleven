@@ -1,5 +1,5 @@
 import Head from "next/head"
-import { Table } from "@nextui-org/react"
+import LeaderboardTable from "components/Leaderboard/LeaderboardTable"
 
 export default function Web() {
   return (
@@ -21,39 +21,7 @@ export default function Web() {
           </div>
         </div>
       </section>
-      <section>
-        <Table
-          aria-label="Example table with static content"
-          css={{
-            height: "auto",
-            minWidth: "100%",
-          }}
-        >
-          <Table.Header>
-            <Table.Column>Name</Table.Column>
-            <Table.Column>Date</Table.Column>
-            <Table.Column>Number of kilometers</Table.Column>
-            <Table.Column>Kilometers run</Table.Column>
-            <Table.Column>Completed</Table.Column>
-          </Table.Header>
-          <Table.Body>
-            <Table.Row key="1">
-              <Table.Cell>Ole</Table.Cell>
-              <Table.Cell>13.07.2023</Table.Cell>
-              <Table.Cell>70km</Table.Cell>
-              <Table.Cell>10km</Table.Cell>
-              <Table.Cell>No</Table.Cell>
-            </Table.Row>
-            <Table.Row key="2">
-              <Table.Cell>Benjamin</Table.Cell>
-              <Table.Cell>13.07.2023</Table.Cell>
-              <Table.Cell>70km</Table.Cell>
-              <Table.Cell>10km</Table.Cell>
-              <Table.Cell>No</Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table>
-      </section>
+      <section>{LeaderboardTable}</section>
     </>
   )
 }
