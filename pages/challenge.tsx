@@ -1,4 +1,5 @@
 import Head from "next/head"
+import LeaderboardTable from "components/Leaderboard/LeaderboardTable"
 
 export default function Web() {
   return (
@@ -20,6 +21,7 @@ export default function Web() {
           </div>
         </div>
       </section>
+      <section>{LeaderboardTable}</section>
     </>
   )
 }
