@@ -5,7 +5,7 @@ export default function PhotoGallery() {
   return (
     <PhotoAlbum
       photos={photos}
-      layout="rows"
+      layout="masonry"
     />
   )
 }
