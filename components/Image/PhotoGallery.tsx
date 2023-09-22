@@ -1,7 +1,4 @@
-"use client"
-
 import PhotoAlbum from "react-photo-album"
-import NextJsImage from "components/Image/NextJsImage"
 import photos from "components/Image/photos"
 
 export default function PhotoGallery() {
@@ -9,16 +6,6 @@ export default function PhotoGallery() {
     <PhotoAlbum
       photos={photos}
       layout="rows"
-      renderPhoto={NextJsImage}
-      defaultContainerWidth={1200}
-      sizes={{
-        size: "calc(100vw - 40px)",
-        sizes: [
-          { viewport: "(max-width: 299px)", size: "calc(100vw - 10px)" },
-          { viewport: "(max-width: 599px)", size: "calc(100vw - 20px)" },
-          { viewport: "(max-width: 1199px)", size: "calc(100vw - 30px)" },
-        ],
-      }}
     />
   )
 }
