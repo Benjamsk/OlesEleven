@@ -1,8 +1,8 @@
 import { IBlogEntryMetaData } from "../IBlogEntryMetaData";
 import "./BlogEntryCard.css";
 
-export function BlogEntryCard(metaData: IBlogEntryMetaData): JSX.Element {
-    const { title, date, description, author } = metaData;
+export function BlogEntryCard(blogEntryMetaData: IBlogEntryMetaData): JSX.Element {
+    const { title, date, description, author } = blogEntryMetaData;
 
     return (
         <div className="blog-entry-card">
