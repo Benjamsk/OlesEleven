@@ -1,10 +1,11 @@
-import images from "./images.json"
+import { Photo } from "react-photo-album"
+import { photos as photosRaw } from "./static/imagesMetaData"
 
 const breakpoints = [1080, 640, 384, 256, 128, 96, 64, 48]
 
 const photoUri = (id: string) => `/${id}`
 
-const photos = images.Photos.map((photo) => ({
+const photos: Photo[] = photosRaw.map((photo) => ({
   src: photoUri(photo.id),
   width: photo.width,
   height: photo.height,
