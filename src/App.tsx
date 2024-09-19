@@ -1,33 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from 'react';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import ButtonAppBar from './Bar';
+import Home from './Home';
+import { GlobalStoreContext } from '.';
+import { observer } from "mobx-react";
+import { Challenge } from './Challenge';
 
-function App() {
+function Copyright() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Typography
+      variant="body2"
+      align="center"
+      sx={{
+        color: 'text.secondary',
+      }}
+    >
+      {'Copyright © OlesEleven '}
+      {new Date().getFullYear()}.
+    </Typography>
   );
 }
 
-function app2() {
-  return 
-  (
-    <div>Hello</div>
-  )
+const App = () => {
+  const store = React.useContext(GlobalStoreContext);
+  
+  const renderContent = () => {
+    if (store.selectedTab === 0) {
+      return <Home />;
+    } else {
+      return <Challenge />;
+    }
+  };
+
+  return (
+    <Box>
+        <ButtonAppBar />
+        <Container>
+          {renderContent()}
+          <Copyright />
+      </Container>
+    </Box>
+  );
 }
 
-export default App;
+export default observer(App);
