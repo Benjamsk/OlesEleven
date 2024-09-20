@@ -5,8 +5,9 @@ import { ThemeProvider } from '@mui/material/styles';
 import App from './App';
 import theme from './theme';
 import { AppStore, IAppStore } from './stores/AppStore';
+import { Page } from './stores/Page';
 
-const store = AppStore.create({ selectedTab: 0 });
+const store = AppStore.create({ selectedTab: Page.Home });
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 
