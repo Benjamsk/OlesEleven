@@ -1,32 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Box, ImageList, ImageListItem, Typography, Dialog, DialogContent } from "@mui/material";
-
 import { images } from "./static/110kChallenge2023/images";
+import { GlobalStoreContext } from ".";
+import { observer } from "mobx-react";
+import { Keys } from "./Keys";
 
-export default function Home() {
-    const [selectedImage, setSelectedImage] = useState(null);
+const Home = () => {
+    const store = React.useContext(GlobalStoreContext);
 
-    const handleClickOpen = (image) => {
-        setSelectedImage(image);
-    };
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === Keys.ArrowRight) {
+                const currentIndex = images.findIndex(i => i.image === store.selectedImage);
+                const nextIndex = (currentIndex + 1) % images.length;
+                store.setSelectedImage(images[nextIndex].image);
+            }
 
-    const handleClose = () => {
-        setSelectedImage(null);
-    };
+            if (event.key === Keys.ArrowLeft) {
+                const currentIndex = images.findIndex(i => i.image === store.selectedImage);
+                const nextIndex = (currentIndex - 1 + images.length) % images.length;
+                store.setSelectedImage(images[nextIndex].image);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    });
 
     return (
         <Box sx={{ my: 4 }}>
-            <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
-                Home
-            </Typography>
             <ImageList variant="masonry" cols={4} gap={8}>
                 {images.map((item, index) => (
-                    <ImageListItem key={index} onClick={() => handleClickOpen(item.image)}>
+                    <ImageListItem key={index} onClick={() => store.setSelectedImage(item.image)}>
                         <img src={item.image} alt={item.title} />
                     </ImageListItem>
                 ))}
             </ImageList>
-            <Dialog open={selectedImage != null} onClose={handleClose}>
+            <Dialog open={store.selectedImage != null} onClose={() => store.setSelectedImage(null)}>
                 <DialogContent
                     style={{
                         padding: 0,
@@ -35,9 +48,9 @@ export default function Home() {
                         overflow: 'hidden',
                     }}
                 >
-                    {selectedImage && (
+                    {store.selectedImage && (
                         <img
-                            src={selectedImage}
+                            src={store.selectedImage}
                             alt="Selected"
                             style={{
                                 maxWidth: '100%',
@@ -50,3 +63,5 @@ export default function Home() {
         </Box>
     );
 }
+
+export default observer(Home);
