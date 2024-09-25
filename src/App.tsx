@@ -7,6 +7,7 @@ import Home from './Home';
 import { GlobalStoreContext } from '.';
 import { observer } from "mobx-react";
 import { Challenge } from './Challenge';
+import { Page } from './stores/Page';
 
 function Copyright() {
   return (
@@ -27,7 +28,7 @@ const App = () => {
   const store = React.useContext(GlobalStoreContext);
   
   const renderContent = () => {
-    if (store.selectedTab === 0) {
+    if (store.selectedTab === Page.Home) {
       return <Home />;
     } else {
       return <Challenge />;

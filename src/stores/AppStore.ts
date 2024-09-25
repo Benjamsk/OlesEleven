@@ -1,10 +1,11 @@
 import { types } from 'mobx-state-tree';
+import { Page } from './Page';
 
 export const AppStore = types.model('AppStore', {
-    selectedTab: types.number,
+    selectedTab: types.enumeration(Object.values(Page)),
 }).actions(self => ({
-    setSelectedTab(tab: number) {
-        self.selectedTab = tab;
+    setSelectedTab(page: Page) {
+        self.selectedTab = page;
     },
 }));
 
