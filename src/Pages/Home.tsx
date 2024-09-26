@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { Box, ImageList, ImageListItem, Typography, Dialog, DialogContent } from "@mui/material";
-import { images } from "./static/110kChallenge2023/images";
-import { GlobalStoreContext } from ".";
+import { images } from "../static/110kChallenge2023/images";
+import { GlobalStoreContext } from "..";
 import { observer } from "mobx-react";
-import { Keys } from "./Keys";
+import { Keys } from "../Keys";
 
 const Home = () => {
     const store = React.useContext(GlobalStoreContext);
