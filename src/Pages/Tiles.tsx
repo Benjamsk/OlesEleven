@@ -12,16 +12,13 @@ class Connection {
 }
 
 export const Tiles = () => {
-    const width = 3;
-    const height = 3;
+    const width = 25;
+    const height = 25;
 
     const connections = new Array(width).fill(null).map(() => new Array(height).fill(null).map(() => new Array<Connection>()));
     
     const horizontal = new Array<boolean>(width).fill(false).map(() => Math.random() < 0.5);
     const vertical = new Array<boolean>(height).fill(false).map(() => Math.random() < 0.5);
-
-    const connections2 = new Array(width-1).fill(null).map(() => new Array<boolean>(height - 1).fill(true));
-    // connections2 should take over for connections, as it is much simpler. The connections are pretty much a smaller array inside 
 
     for (let x = 0; x < width; x++) {
         for (let y = 0; y < height; y++) {
@@ -32,11 +29,7 @@ export const Tiles = () => {
                 connections[x][y].push(new Connection(x + 1, y));
             }
         }
-
-
     }
-
-    console.log(connections);
 
     const cells = new Array(width).fill(null).map(() => new Array<boolean>(height).fill(false));
 
@@ -58,7 +51,6 @@ export const Tiles = () => {
         }
     }
 
-    // Render the pattern
     return (
         <Box sx={{ my: 4, display: 'flex', justifyContent: 'center'}}>
             <svg width={width * 16} height={height * 16}>
