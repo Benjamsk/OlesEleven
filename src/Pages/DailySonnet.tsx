@@ -1,6 +1,7 @@
 import React from 'react';
 import sonnetsJson from '../static/sonnets.json';
 import { Box, Typography } from '@mui/material';
+import { Random } from '../Random';
 
 const SHAKESPEARE_SONNETS_COUNT : number = 154;
 const SHAKESPEARE_BIRTHDAY : string = '1564-04-23';
@@ -20,6 +21,10 @@ class SonnetRecord {
 const today = new Date();
 const startDate = new Date(SHAKESPEARE_BIRTHDAY);
 const daysDifference = Math.floor((today.getTime() - startDate.getTime()) / 86400000);
+
+var ran = new Random();
+sonnetsJson.sort(() => ran.next() - 0.5);
+
 const sonnet = sonnetsJson[daysDifference % SHAKESPEARE_SONNETS_COUNT];
 const sonnetRecord = new SonnetRecord(sonnet.title, sonnet.lines);
 
