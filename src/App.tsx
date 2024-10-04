@@ -9,6 +9,7 @@ import { Challenge } from './Pages/Challenge';
 import { Page } from './stores/Page';
 import Home from './Pages/Home';
 import { Questions } from './Pages/Questions';
+import { DailySonnet } from './Pages/DailySonnet';
 
 function Copyright() {
   return (
@@ -31,7 +32,10 @@ const Content = (page: Page) => {
           return <Challenge />;
       case Page.Questions:
           return <Questions />;
+      case Page.DailySonnet:
+          return <DailySonnet />;
       case Page.Home:
+          return <Home />;
       default:
           return <Home />;
   }
@@ -45,8 +49,8 @@ const App = () => {
       <ButtonAppBar />
       <Container>
           {Content(store.selectedTab)}
-          <Copyright />
       </Container>
+      <Copyright />
     </Box>
   );
 }
