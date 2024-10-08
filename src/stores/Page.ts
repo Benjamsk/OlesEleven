@@ -2,5 +2,6 @@ export enum Page {
     Challenge = 'Challenge',
     Home = 'Home',
     Questions = 'Questions',
-    DailySonnet = 'DailySonnet'
+    DailySonnet = 'DailySonnet',
+    Tiles = 'Tiles'
 }

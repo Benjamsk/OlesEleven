@@ -40,33 +40,35 @@ export const Challenge = () => {
 }
 
 function GetChallengeTable(challengeRecords : ChallengeRecord[]) {
-    return <TableContainer component={Paper}>
-        <Table>
-            <TableHead>
-                <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell align="right">Date</TableCell>
-                    <TableCell align="right">Total distance (km)</TableCell>
-                    <TableCell align="right">Run distance (km)</TableCell>
-                    <TableCell align="right">Completed</TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {challengeRecords.map((row) => (
-                    <TableRow
-                        key={row.name}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                        <TableCell>{row.name}</TableCell>
-                        <TableCell align="right">{row.date}</TableCell>
-                        <TableCell align="right">{row.totalDistance}</TableCell>
-                        <TableCell align="right">{row.runDistance}</TableCell>
-                        <TableCell align="right">{row.completed}</TableCell>
+    return (
+        <TableContainer component={Paper}>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Name</TableCell>
+                        <TableCell align="right">Date</TableCell>
+                        <TableCell align="right">Total distance (km)</TableCell>
+                        <TableCell align="right">Run distance (km)</TableCell>
+                        <TableCell align="right">Completed</TableCell>
                     </TableRow>
-                ))}
-            </TableBody>
-        </Table>
-    </TableContainer>;
+                </TableHead>
+                <TableBody>
+                    {challengeRecords.map((row) => (
+                        <TableRow
+                            key={row.name}
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell>{row.name}</TableCell>
+                            <TableCell align="right">{row.date}</TableCell>
+                            <TableCell align="right">{row.totalDistance}</TableCell>
+                            <TableCell align="right">{row.runDistance}</TableCell>
+                            <TableCell align="right">{row.completed}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    );
 }
 
 function GetChallengeDescription() {

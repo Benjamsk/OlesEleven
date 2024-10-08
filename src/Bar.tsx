@@ -20,6 +20,7 @@ export default function ButtonAppBar() {
                     <Button color="inherit" onClick={() => store.setSelectedTab(Page.Home)}>Home</Button>
                     <Button color="inherit" onClick={() => store.setSelectedTab(Page.DailySonnet)}>Daily Sonnet</Button>
                     <Button color="inherit" onClick={() => store.setSelectedTab(Page.Questions)}>Questions</Button>
+                    <Button color="inherit" onClick={() => store.setSelectedTab(Page.Tiles)}>Tiles</Button>
                     <Button color="inherit" onClick={() => store.setSelectedTab(Page.Challenge)}>Challenge</Button>
                 </Toolbar>
             </AppBar>

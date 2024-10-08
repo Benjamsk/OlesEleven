@@ -10,6 +10,7 @@ import { Page } from './stores/Page';
 import Home from './Pages/Home';
 import { Questions } from './Pages/Questions';
 import { DailySonnet } from './Pages/DailySonnet';
+import { Tiles } from './Pages/Tiles';
 
 function Copyright() {
   return (
@@ -34,6 +35,10 @@ const Content = (page: Page) => {
           return <Questions />;
       case Page.DailySonnet:
           return <DailySonnet />;
+      case Page.Questions:
+          return <Questions />;
+      case Page.Tiles:
+          return <Tiles />;
       case Page.Home:
           return <Home />;
       default:
