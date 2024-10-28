@@ -11,6 +11,7 @@ import Home from './Pages/Home';
 import { Questions } from './Pages/Questions';
 import { DailySonnet } from './Pages/DailySonnet';
 import { Tiles } from './Pages/Tiles';
+import { Auctions } from './Pages/Auctions';
 
 function Copyright() {
   return (
@@ -41,6 +42,8 @@ const Content = (page: Page) => {
           return <Tiles />;
       case Page.Home:
           return <Home />;
+      case Page.Auctions:
+          return <Auctions />;
       default:
           return <Home />;
   }
