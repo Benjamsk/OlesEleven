@@ -55,9 +55,7 @@ const App = () => {
   return (
     <Box>
       <ButtonAppBar />
-      <Container>
           {Content(store.selectedTab)}
-      </Container>
       <Copyright />
     </Box>
   );

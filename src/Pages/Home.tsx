@@ -4,6 +4,7 @@ import { images } from "../static/110kChallenge2023/images";
 import { GlobalStoreContext } from "..";
 import { observer } from "mobx-react";
 import { Keys } from "../Keys";
+import { Container } from "@mui/material";
 
 const Home = () => {
     const store = React.useContext(GlobalStoreContext);
@@ -31,6 +32,7 @@ const Home = () => {
     });
 
     return (
+        <Container>
         <Box sx={{ my: 4 }}>
             <ImageList variant="masonry" cols={4} gap={8}>
                 {images.map((item, index) => (
@@ -61,6 +63,7 @@ const Home = () => {
                 </DialogContent>
             </Dialog>
         </Box>
+        </Container>
     );
 }
 

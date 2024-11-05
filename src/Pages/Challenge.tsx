@@ -32,10 +32,12 @@ const challengeRecords : ChallengeRecord[] = [
 
 export const Challenge = () => { 
     return (
-        <Box sx={{ my: 4 }}>
-            {GetChallengeDescription()}
-            {GetChallengeTable(challengeRecords)}
-        </Box>
+        <Container>
+            <Box sx={{ my: 4 }}>
+                {GetChallengeDescription()}
+                {GetChallengeTable(challengeRecords)}
+            </Box>
+        </Container>
     );
 }
 
