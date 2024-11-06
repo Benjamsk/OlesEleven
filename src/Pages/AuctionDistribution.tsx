@@ -1,10 +1,9 @@
 export interface AuctionDistribution {
     privateValue(): number;
     firstPriceSealedBid(value: number, numberOfBidders: number): number;
-    secondPriceSealedBid(value: number, numberOfBidders: number): number;
-    thirdPriceSealedBid(value: number, numberOfBidders: number): number;
+    secondPriceSealedBid(value: number): number;
     probability(value: number): number;
-    cummulativeProbability(value: number): number;
+    cumulativeProbability(value: number): number;
 }
 
 export class Uniform implements AuctionDistribution {
@@ -16,19 +15,15 @@ export class Uniform implements AuctionDistribution {
         return value * (numberOfBidders - 1) / numberOfBidders;
     }
 
-    public secondPriceSealedBid(value: number, numberOfBidders: number) : number {
+    public secondPriceSealedBid(value: number) : number {
         return value;
-    }
-
-    public thirdPriceSealedBid(value: number, numberOfBidders: number) : number {
-        return value * (numberOfBidders - 1) / (numberOfBidders - 2);
     }
 
     public probability(value: number): number {
         return 1;
     }
     
-    public cummulativeProbability(value: number): number {
+    public cumulativeProbability(value: number): number {
         return value;
     }
 }
@@ -42,19 +37,15 @@ export class Linear implements AuctionDistribution {
         return value * ((2 * numberOfBidders - 2) / (2 * numberOfBidders - 1));
     }
 
-    public secondPriceSealedBid(value: number, numberOfBidders: number) : number {
+    public secondPriceSealedBid(value: number) : number {
         return value;
-    }
-
-    public thirdPriceSealedBid(value: number, numberOfBidders: number) : number {
-        return value * ((3 * numberOfBidders - 3) / (3 * numberOfBidders - 2));
     }
 
     public probability(value: number): number {
         return 2 * value;
     }
     
-    public cummulativeProbability(value: number): number {
+    public cumulativeProbability(value: number): number {
         return Math.pow(value, 2);
     }
 }
@@ -68,20 +59,38 @@ export class InverseSquareRoot implements AuctionDistribution {
         return value * (numberOfBidders - 1) / (numberOfBidders + 1);
     }
 
-    public secondPriceSealedBid(value: number, numberOfBidders: number): number {
+    public secondPriceSealedBid(value: number): number {
         return value;
-    }
-
-    public thirdPriceSealedBid(value: number, numberOfBidders: number): number {
-        return value * (numberOfBidders - 1) / (numberOfBidders + 2);
     }
 
     public probability(value: number): number {
         return 0.5 * Math.pow(value, -0.5);
     }
     
-    public cummulativeProbability(value: number): number {
+    public cumulativeProbability(value: number): number {
         return Math.pow(value, 0.5);
+    }
+}
+
+export class Square implements AuctionDistribution {
+    public privateValue(): number {
+        return Math.pow(Math.random(), (1/3));
+    }
+
+    public firstPriceSealedBid(value: number, numberOfBidders: number): number {
+        return value * ((3 * numberOfBidders - 3) / (3 * numberOfBidders - 2));
+    }
+
+    public secondPriceSealedBid(value: number): number {
+        return value;
+    }
+
+    public probability(value: number): number {
+        return Math.pow(value, 2);
+    }
+    
+    public cumulativeProbability(value: number): number {
+        return Math.pow(value, 3);
     }
 }
 
@@ -92,18 +101,18 @@ export interface Bidder {
 
 export class AuctionGenerator {
     private numberOfBidders: number;
-    private distribution: AuctionDistribution;
+    private auctionDistribution: AuctionDistribution;
 
     constructor(numberOfBidders: number, distribution: AuctionDistribution) {
         this.numberOfBidders = numberOfBidders;
-        this.distribution = distribution;
+        this.auctionDistribution = distribution;
     }
 
     public generateFirstPriceSealedBidBidders() : Bidder[] {
         const bidders: Bidder[] = [];
         for (let i = 0; i < this.numberOfBidders; i++) {
-            const privateValue = this.distribution.privateValue();
-            const bidValue = this.distribution.firstPriceSealedBid(privateValue, this.numberOfBidders);
+            const privateValue = this.auctionDistribution.privateValue();
+            const bidValue = this.auctionDistribution.firstPriceSealedBid(privateValue, this.numberOfBidders);
             bidders.push({privateValue, bidValue});
         }
 
@@ -113,19 +122,8 @@ export class AuctionGenerator {
     public generateSecondPriceSealedBidBidders() : Bidder[] {
         const bidders: Bidder[] = [];
         for (let i = 0; i < this.numberOfBidders; i++) {
-            const privateValue = this.distribution.privateValue();
-            const bidValue = this.distribution.secondPriceSealedBid(privateValue, this.numberOfBidders);
-            bidders.push({privateValue, bidValue});
-        }
-
-        return bidders.sort((a, b) => b.bidValue - a.bidValue)
-    }
-
-    public generateThirdPriceSealedBidBidders() : Bidder[] {
-        const bidders: Bidder[] = [];
-        for (let i = 0; i < this.numberOfBidders; i++) {
-            const privateValue = this.distribution.privateValue();
-            const bidValue = this.distribution.thirdPriceSealedBid(privateValue, this.numberOfBidders);
+            const privateValue = this.auctionDistribution.privateValue();
+            const bidValue = this.auctionDistribution.secondPriceSealedBid(privateValue);
             bidders.push({privateValue, bidValue});
         }
 

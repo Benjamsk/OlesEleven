@@ -1,19 +1,14 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { AuctionGenerator, Linear, InverseSquareRoot, Uniform } from './AuctionDistribution';
+import { AuctionGenerator, Linear, InverseSquareRoot, Uniform, Square } from './AuctionDistribution';
 import { ChartContainer } from '@mui/x-charts/ChartContainer';
 import { ChartsReferenceLine } from '@mui/x-charts/ChartsReferenceLine';
 import { LinePlot, LineChart, MarkPlot } from '@mui/x-charts/LineChart';
 import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
 import { DatasetElementType } from '@mui/x-charts/internals';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import { Container } from "@mui/material";
 import '../ExtensionMethods/Arrays';
-import Box from "@mui/material/Box";
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import FormControl from '@mui/material/FormControl';
-import { Typography } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material/Select';
+import { InputLabel, MenuItem, Box, Typography, FormControl, Select, Container } from '@mui/material';
 
 export type NumberDataset = {
     values: DatasetElementType<number>[];
@@ -57,14 +52,14 @@ export const Auctions = () => {
         setNumberOfAuctions(parseInt(event.target.value, 10));
     }
 
-    var auctionDistribution = distribution === 'Linear' ? new Linear() : distribution === 'Uniform' ? new Uniform() : new InverseSquareRoot();
+    var auctionDistribution = distribution === 'Linear' ? new Linear() : distribution === 'Uniform' ? new Uniform() : distribution === 'Square' ? new Square() : new InverseSquareRoot();
 
     var probabilityDistribution : DatasetElementType<number>[] = Array.from({ length: 100 }, (_, i) => ({ x: (i + 1) / 100, y: 0 }));
-    var cummulativeProbabilityDistribution : DatasetElementType<number>[] = Array.from({ length: 100 }, (_, i) => ({ x: (i + 1) / 100, y: 0 }));
+    var cumulativeProbabilityDistribution : DatasetElementType<number>[] = Array.from({ length: 100 }, (_, i) => ({ x: (i + 1) / 100, y: 0 }));
 
     for(var i = 0; i < probabilityDistribution.length; i++ ) {
         probabilityDistribution[i].y = auctionDistribution.probability(probabilityDistribution[i].x);
-        cummulativeProbabilityDistribution[i].y = auctionDistribution.cummulativeProbability(cummulativeProbabilityDistribution[i].x);
+        cumulativeProbabilityDistribution[i].y = auctionDistribution.cumulativeProbability(cumulativeProbabilityDistribution[i].x);
     }
 
     const { firstPriceAuction, secondPriceAuction} = GetAuctionSimulationResult(distribution, numberOfBidders, numberOfAuctions);
@@ -83,6 +78,7 @@ export const Auctions = () => {
                     >
                         <MenuItem value={'Uniform'}>Uniform</MenuItem>
                         <MenuItem value={'Linear'}>Linear</MenuItem>
+                        <MenuItem value={'Square'}>Square</MenuItem>
                         <MenuItem value={'Inverse Square Root'}>Inverse Square Root</MenuItem>
                     </Select>
                 </FormControl>
@@ -118,16 +114,15 @@ export const Auctions = () => {
                         ))}
                     </Select>
                 </FormControl>
-                
                 {LineChartWithTitle(probabilityDistribution, 'Probability Distribution')}
-                {LineChartWithTitle(cummulativeProbabilityDistribution, 'Cummulative Probability Distribution')}
+                {LineChartWithTitle(cumulativeProbabilityDistribution, 'Cummlative Probability Distribution')}
             </Box>
             <Container sx={{ flexGrow: 1 }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                    {LineChartWithReferenceLines(firstPriceAuction.winningBid, 'First Price Sealed Bid Auction')}
-                    {LineChartWithReferenceLines(firstPriceAuction.winnnersProfit, 'First Price Sealed Bid Auction Profit')}
-                    {LineChartWithReferenceLines(secondPriceAuction.winningBid, 'Second Price Sealed Bid Auction')}
-                    {LineChartWithReferenceLines(secondPriceAuction.winnnersProfit, 'Second Price Sealed Bid Auction Profit')}
+                    {LineChartWithReferenceLines(firstPriceAuction.winningBid, 'First Price Sealed Bid Auction - Winners Price')}
+                    {LineChartWithReferenceLines(firstPriceAuction.winnnersProfit, 'First Price Sealed Bid - Winners Profit')}
+                    {LineChartWithReferenceLines(secondPriceAuction.winningBid, 'Second Price Sealed Bid Auction - Winners Price')}
+                    {LineChartWithReferenceLines(secondPriceAuction.winnnersProfit, 'Second Price Sealed Bid - Winners Profit')}
                 </div>
             </Container>
         </div>
@@ -175,8 +170,8 @@ export const LineChartWithReferenceLines = (data: NumberDataset, title: string) 
 };
 
 function GetAuctionSimulationResult(distribution: string, numberOfBidders: number, numberOfAuctions: number): { firstPriceAuction: AuctionSimulationResult; secondPriceAuction: AuctionSimulationResult; } {
-    const distributionInstance = distribution === 'Linear' ? new Linear() : distribution === 'Uniform' ? new Uniform() : new InverseSquareRoot();
-    const auction = new AuctionGenerator(numberOfBidders, distributionInstance);
+    var auctionDistribution = distribution === 'Linear' ? new Linear() : distribution === 'Uniform' ? new Uniform() : distribution === 'Square' ? new Square() : new InverseSquareRoot();
+    const auction = new AuctionGenerator(numberOfBidders, auctionDistribution);
 
     const firstPriceSealedBidWinningBid = new Array<number>(numberOfAuctions);
     const firstPriceSealedBidProfit = new Array<number>(numberOfAuctions);
